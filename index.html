@@ -1,0 +1,219 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleColorEmoji;\f2\fnil\fcharset77 ZapfDingbatsITC;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<meta charset="UTF-8">\
+<title>For You 
+\f1 \uc0\u10084 \u65039 
+\f0 </title>\
+\
+<style>\
+body \{\
+    margin: 0;\
+    height: 100vh;\
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);\
+    display: flex;\
+    justify-content: center;\
+    align-items: center;\
+    font-family: 'Segoe UI', sans-serif;\
+    color: #fff;\
+    overflow: hidden;\
+\}\
+\
+.card \{\
+    background: rgba(255,255,255,0.18);\
+    padding: 30px;\
+    border-radius: 22px;\
+    width: 90%;\
+    max-width: 420px;\
+    text-align: center;\
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);\
+    animation: fadeUp 0.6s ease;\
+\}\
+\
+@keyframes fadeUp \{\
+    from \{ opacity: 0; transform: translateY(20px); \}\
+    to \{ opacity: 1; transform: translateY(0); \}\
+\}\
+\
+.hidden \{\
+    display: none;\
+\}\
+\
+h1 \{\
+    margin-bottom: 10px;\
+\}\
+\
+p \{\
+    font-size: 18px;\
+    line-height: 1.5;\
+\}\
+\
+button \{\
+    padding: 10px 24px;\
+    border: none;\
+    border-radius: 25px;\
+    font-size: 16px;\
+    cursor: pointer;\
+    margin: 10px;\
+    transition: 0.3s ease;\
+\}\
+\
+button:hover \{\
+    transform: scale(1.12);\
+\}\
+\
+#yes \{\
+    background: #fff;\
+    color: #ff4d6d;\
+    font-weight: bold;\
+\}\
+\
+#no \{\
+    background: transparent;\
+    color: #fff;\
+    border: 2px solid #fff;\
+\}\
+\
+.music-btn \{\
+    position: fixed;\
+    bottom: 20px;\
+    right: 20px;\
+    background: rgba(255,255,255,0.25);\
+    border: none;\
+    border-radius: 50%;\
+    padding: 12px 14px;\
+    font-size: 18px;\
+    color: #fff;\
+    cursor: pointer;\
+\}\
+</style>\
+</head>\
+\
+<body>\
+\
+<audio id="bgMusic" loop>\
+    <source src="Akhiyaan Gulaab - Teri Baaton Mein Aisa Uljha Jiya 320 Kbps.mp3" type="audio/mpeg">\
+</audio>\
+\
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+\f1 \uc0\u9654 \u65039 
+\f0 </button>\
+\
+<div class="card" id="step1">\
+    <h1>Hey You 
+\f1 \uc0\u55357 \u56384 \u10084 \u65039 
+\f0 </h1>\
+    <p>\
+        I was thinking\'85<br>\
+        You smile, I smile.<br>\
+        Coincidence? I don\'92t think so 
+\f1 \uc0\u55357 \u56844 
+\f0 \
+    </p>\
+    <button onclick="goTo(1,2)">Next 
+\f2 \uc0\u10141 
+\f0 </button>\
+</div>\
+\
+<div class="card hidden" id="step2">\
+    <h1>Quick Question 
+\f1 \uc0\u55357 \u56904 
+\f0 </h1>\
+    <p>\
+        Life is short,<br>\
+        Coffee is better together 
+\f1 \uc0\u9749 
+\f0 <br>\
+        And you make things\'85 nicer.\
+    </p>\
+    <button onclick="goTo(2,3)">Okay 
+\f1 \uc0\u55357 \u56384 
+\f0 </button>\
+</div>\
+\
+<div class="card hidden" id="step3">\
+    <h1>So\'85 
+\f1 \uc0\u55357 \u56470 
+\f0 </h1>\
+    <p>Will you be my Valentine?</p>\
+    <button id="yes" onclick="goTo(3,4)">YES 
+\f1 \uc0\u55357 \u56469 
+\f0 </button>\
+    <button id="no" onmouseover="moveNo()">NO 
+\f1 \uc0\u55357 \u56847 
+\f0 </button>\
+</div>\
+\
+<div class="card hidden" id="step4">\
+    <h1>YAYYY 
+\f1 \uc0\u55358 \u56697 \u10084 \u65039 
+\f0 </h1>\
+    <p>\
+        I promise bad jokes,<br>\
+        good coffee,<br>\
+        and stealing fries 
+\f1 \uc0\u55356 \u57183 
+\f0 \
+    </p>\
+    <strong>Happy Valentine\'92s 
+\f1 \uc0\u55357 \u56460 
+\f0 </strong>\
+</div>\
+\
+<script>\
+const music = document.getElementById("bgMusic");\
+const musicBtn = document.getElementById("musicBtn");\
+\
+document.addEventListener("click", () => \{\
+    if (music.paused) \{\
+        music.volume = 0.4;\
+        music.play();\
+        musicBtn.textContent = "
+\f1 \uc0\u9208 \u65039 
+\f0 ";\
+    \}\
+\}, \{ once: true \});\
+\
+function toggleMusic() \{\
+    if (music.paused) \{\
+        music.play();\
+        musicBtn.textContent = "
+\f1 \uc0\u9208 \u65039 
+\f0 ";\
+    \} else \{\
+        music.pause();\
+        musicBtn.textContent = "
+\f1 \uc0\u9654 \u65039 
+\f0 ";\
+    \}\
+\}\
+\
+function goTo(from, to) \{\
+    document.getElementById("step" + from).classList.add("hidden");\
+    document.getElementById("step" + to).classList.remove("hidden");\
+\}\
+\
+function moveNo() \{\
+    const noBtn = document.getElementById("no");\
+\
+    const padding = 20;\
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;\
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;\
+\
+    noBtn.style.position = "fixed";\
+    noBtn.style.left = Math.random() * maxX + "px";\
+    noBtn.style.top = Math.random() * maxY + "px";\
+\}\
+</script>\
+\
+</body>\
+</html>\
+}
