@@ -3,177 +3,394 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💌</title>
+<title>For You ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Rozha+One&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
+    :root {
+        --glass: rgba(30, 15, 10, 0.85);
+        --border: rgba(255, 215, 0, 0.4);
+        --gold: #ffd700;
+        --maroon: #5a0e0e;
+        --text: #f0f0f0;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
         margin: 0;
         height: 100vh;
-        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        width: 100vw;
+        font-family: 'Lato', sans-serif;
+        color: var(--text);
+        background-color: #1a0b0b;
+        background-image: url('flbg.jpg'); 
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'Segoe UI', sans-serif;
-        color: #fff;
-        overflow: hidden;
+        /* REQUIRED FOR TILT EFFECT */
+        perspective: 1000px;
     }
 
-    .card {
-        background: rgba(255,255,255,0.18);
-        padding: 30px;
-        border-radius: 22px;
+    /* Dark Overlay */
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: -1;
+    }
+
+    /* PRELOADER */
+    #preloader {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: #1a0b0b;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: opacity 0.5s ease;
+    }
+    .loader-heart { font-size: 50px; animation: heartbeat 1.2s infinite; }
+    .loading-text { color: var(--gold); margin-top: 15px; font-family: 'Cinzel Decorative'; }
+
+    /* CARD CONTAINER */
+    .card-container {
         width: 90%;
-        max-width: 420px;
+        max-width: 450px;
+        position: relative;
+        height: auto;
+        min-height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* TILT PROPERTIES */
+        transform-style: preserve-3d;
+        transition: transform 0.1s ease-out; 
+    }
+
+    /* SLIDES */
+    .slide {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px 30px;
         text-align: center;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-        animation: fadeUp 0.6s ease;
-        backdrop-filter: blur(5px);
+        width: 100%;
+        position: absolute;
+        display: none;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 10;
+        /* Lifts the card content slightly off the rotation plane */
+        transform: translateZ(30px); 
+    }
+
+    .slide.active {
+        display: block;
+        animation: fadeUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; transform: translateY(30px) translateZ(30px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) translateZ(30px) scale(1); }
     }
 
-    .hidden {
-        display: none;
+    /* DECORATIONS */
+    .jhumka {
+        position: absolute;
+        top: -5px; width: 2px; height: 50px;
+        background: var(--gold);
+        z-index: 15;
+    }
+    .jhumka::after {
+        content: "";
+        position: absolute; bottom: -12px; left: -6px;
+        width: 14px; height: 14px;
+        background: radial-gradient(circle, var(--gold) 40%, #b8860b 100%);
+        border-radius: 50% 50% 2px 2px;
+        box-shadow: 0 0 8px var(--gold);
+    }
+    .left-j { left: 25px; animation: swing 3s infinite ease-in-out; }
+    .right-j { right: 25px; height: 70px; animation: swing 4s infinite ease-in-out; }
+
+    @keyframes swing {
+        0%, 100% { transform: rotate(4deg); }
+        50% { transform: rotate(-4deg); }
     }
 
-    h1 {
-        margin-bottom: 10px;
+    h1 { font-family: 'Rozha One', serif; font-size: 2.2rem; color: var(--gold); margin: 0 0 15px 0; }
+    p { font-size: 1.15rem; line-height: 1.6; margin-bottom: 25px; font-weight: 300; }
+    
+    .jaali-strip {
+        height: 8px; width: 80%; margin: 10px auto 25px;
+        background-image: radial-gradient(var(--gold) 15%, transparent 16%);
+        background-size: 8px 8px; opacity: 0.4;
     }
 
-    p {
-        font-size: 18px;
-        line-height: 1.5;
-    }
-
-    button {
-        padding: 10px 24px;
-        border: none;
-        border-radius: 25px;
-        font-size: 16px;
-        cursor: pointer;
-        margin: 10px;
-        transition: 0.3s ease;
-    }
-
-    button:hover {
-        transform: scale(1.12);
-    }
-
-    #yes {
-        background: #fff;
-        color: #ff4d6d;
-        font-weight: bold;
-    }
-
-    #no {
+    /* BUTTONS */
+    .btn-next {
         background: transparent;
-        color: #fff;
-        border: 2px solid #fff;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-family: 'Cinzel Decorative', cursive;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 1rem;
+        transform: translateZ(10px);
+    }
+    .btn-next:hover { background: var(--gold); color: #1a0b0b; }
+
+    /* ACTION AREA */
+    .action-btn-group {
+        display: flex;
+        flex-direction: row; 
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+        height: 100px;
+        position: relative;
+        margin-top: 20px;
+        transform: translateZ(10px); 
     }
 
-    .music-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(255,255,255,0.25);
-        border: none;
-        border-radius: 50%;
-        padding: 12px 14px;
-        font-size: 18px;
-        color: #fff;
+    .btn-main {
+        padding: 12px 30px;
+        border-radius: 50px;
+        border: 1px solid var(--gold);
+        font-family: 'Cinzel Decorative';
         cursor: pointer;
-        z-index: 100;
+        min-width: 100px;
+        font-size: 1rem;
     }
+    
+    #yes { 
+        background: var(--gold); 
+        color: #1a0b0b; 
+        font-weight: bold; 
+        z-index: 20; 
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    }
+    
+    #no { 
+        background: rgba(0,0,0,0.3); 
+        color: #fff; 
+        z-index: 1000; 
+        transition: 0.1s; 
+    }
+
+    /* MUSIC FAB */
+    .music-fab {
+        position: fixed;
+        bottom: 25px; right: 25px;
+        width: 45px; height: 45px;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        display: flex; justify-content: center; align-items: center;
+        color: var(--gold); cursor: pointer;
+        background: rgba(0,0,0,0.5); z-index: 100;
+    }
+
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+    
+    .petal {
+        position: fixed; top: -10%;
+        background: rgba(220, 20, 60, 0.6);
+        border-radius: 50% 0 50% 50%;
+        z-index: 1; pointer-events: none;
+        animation: fall linear infinite;
+    }
+    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
 </style>
 </head>
-
 <body>
 
-<audio id="bgMusic" loop>
+<div id="preloader">
+    <div class="loader-heart">❤️</div>
+    <div class="loading-text">Decorating...</div>
+</div>
+
+<audio id="bgMusic" loop preload="none">
     <source src="Akhiyaan Gulaab - Teri Baaton Mein Aisa Uljha Jiya 320 Kbps.mp3" type="audio/mpeg">
 </audio>
+<div class="music-fab" onclick="toggleMusic()">♫</div>
 
-<button class="music-btn" id="musicBtn" onclick="toggleMusic()">▶</button>
+<div id="petals-container"></div>
 
-<div class="card" id="step1">
-    <h1>Hey You 👋 ❤️</h1>
-    <p>
-        I was thinking...<br>
-        You smile, I smile.<br>
-        Coincidence? I don't think so 😏
-    </p>
-    <button onclick="goTo(1,2)">Next ➢</button>
-</div>
+<div class="card-container" id="tiltCard">
 
-<div class="card hidden" id="step2">
-    <h1>Quick Question 🫣</h1>
-    <p>
-        Life is short,<br>
-        Coffee is better together ☕<br>
-        And you make things... nicer.
-    </p>
-    <button onclick="goTo(2,3)">Okay 👌</button>
-</div>
+    <div class="slide active" id="slide1">
+        <div class="jhumka left-j"></div>
+        <div class="jhumka right-j"></div>
+        <h1>Suno... ✨</h1>
+        <div class="jaali-strip"></div>
+        <p>
+            In this busy city of millions,<br>
+            my eyes always search for one person.
+        </p>
+        <button class="btn-next" onclick="nextSlide(1, 2)">Aage Chalein? ➢</button>
+    </div>
 
-<div class="card hidden" id="step3">
-    <h1>So... 🫣</h1>
-    <p>Will you be my Valentine?</p>
-    <button id="yes" onclick="goTo(3,4)">YES 💖</button>
-    <button id="no" onmouseover="moveNo()">NO 😢</button>
-</div>
+    <div class="slide" id="slide2">
+        <div class="jhumka left-j"></div>
+        <div class="jhumka right-j"></div>
+        <h1>Thinking... 🤔</h1>
+        <p>
+            You smile, I smile.<br>
+            Coincidence? I don't think so.<br>
+            <br>
+            Life is short, and coffee (and Chai) is definitely better together. ☕
+        </p>
+        <button class="btn-next" onclick="nextSlide(2, 3)">Exactly! ➢</button>
+    </div>
 
-<div class="card hidden" id="step4">
-    <h1>YAYYY 🥳 ❤️</h1>
-    <p>
-        I promise bad jokes,<br>
-        good coffee,<br>
-        and stealing fries 🍟
-    </p>
-    <strong>Happy Valentine's 🌹</strong>
+    <div class="slide" id="slide3">
+        <div class="jhumka left-j"></div>
+        <div class="jhumka right-j"></div>
+        <h1>So... 🌹</h1>
+        <p>Will you be the 'Noor' to my 'Delhi'?</p>
+        <p style="font-size: 0.9em; opacity: 0.8">(Will you be my Valentine?)</p>
+        
+        <div class="action-btn-group">
+            <button class="btn-main" id="yes" onclick="nextSlide(3, 4)">YES! 💖</button>
+            <button class="btn-main" id="no" ontouchstart="moveNo()" onmouseover="moveNo()">NO 🙈</button>
+        </div>
+    </div>
+
+    <div class="slide" id="slide4">
+        <div class="jhumka left-j"></div>
+        <div class="jhumka right-j"></div>
+        <h1>Mubarak Ho! 🎉</h1>
+        <div class="jaali-strip"></div>
+        <p>
+            I promise bad jokes,<br>
+            stealing your fries 🍟,<br>
+            and never letting this spark fade.
+        </p>
+        <strong>See you soon! ❤️</strong>
+    </div>
+
 </div>
 
 <script>
-const music = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
+    // 1. PAGE LOAD
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('preloader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('preloader').style.display = 'none';
+            }, 500);
+        }, 1500);
+    });
 
-// Try to play music on first click anywhere on page (browser policy often blocks auto-play)
-document.addEventListener("click", () => {
-    if (music.paused) {
-        music.volume = 0.4;
-        music.play().catch(e => console.log("Audio play failed:", e));
-        musicBtn.textContent = "⏸";
+    // 2. 3D TILT EFFECT
+    const card = document.getElementById('tiltCard');
+    
+    document.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.pageX) / 25; 
+        const y = (window.innerHeight / 2 - e.pageY) / 25;
+        card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
+    
+    document.addEventListener('touchend', () => {
+        card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    });
+
+    // 3. SLIDE NAVIGATION
+    function nextSlide(current, next) {
+        const currentSlide = document.getElementById('slide' + current);
+        const nextSlide = document.getElementById('slide' + next);
+        
+        currentSlide.classList.remove('active');
+        
+        if (current === 1 && document.getElementById("bgMusic").paused) {
+            toggleMusic();
+        }
+
+        setTimeout(() => {
+            nextSlide.classList.add('active');
+        }, 100);
     }
-}, { once: true });
 
-function toggleMusic() {
-    if (music.paused) {
-        music.play();
-        musicBtn.textContent = "⏸";
-    } else {
-        music.pause();
-        musicBtn.textContent = "▶";
+    // 4. MUSIC
+    const music = document.getElementById("bgMusic");
+    function toggleMusic() {
+        if (music.paused) {
+            music.volume = 0.5;
+            music.play().catch(e => console.log("Audio waiting"));
+            document.querySelector('.music-fab').innerHTML = "❚❚";
+        } else {
+            music.pause();
+            document.querySelector('.music-fab').innerHTML = "♫";
+        }
     }
-}
 
-function goTo(from, to) {
-    document.getElementById("step" + from).classList.add("hidden");
-    document.getElementById("step" + to).classList.remove("hidden");
-}
+    // 5. RUNAWAY NO (UPDATED: Restrict Movement Area)
+    let scaleFactor = 1; 
 
-function moveNo() {
-    const noBtn = document.getElementById("no");
+    function moveNo() {
+        const noBtn = document.getElementById("no");
+        const yesBtn = document.getElementById("yes");
 
-    const padding = 20;
-    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+        // A. Expand YES button
+        scaleFactor += 0.3; 
+        yesBtn.style.transform = `scale(${scaleFactor})`;
 
-    noBtn.style.position = "fixed";
-    noBtn.style.left = Math.random() * maxX + "px";
-    noBtn.style.top = Math.random() * maxY + "px";
-}
+        // B. Move NO button
+        noBtn.style.position = "fixed"; 
+        noBtn.style.width = "100px"; 
+
+        // --- NEW LOGIC START ---
+        // Instead of full screen, we calculate a "Central Box" 
+        // roughly 60% of the screen width/height.
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        const moveWidth = width * 0.6; // 60% of screen width
+        const moveHeight = height * 0.6; // 60% of screen height
+
+        // Offsets to center the movement box
+        const offsetX = (width - moveWidth) / 2;
+        const offsetY = (height - moveHeight) / 2;
+
+        // Generate random position WITHIN this central box
+        const randomX = offsetX + Math.random() * moveWidth;
+        const randomY = offsetY + Math.random() * moveHeight;
+        // --- NEW LOGIC END ---
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+    }
+
+    // 6. PETALS
+    function createPetals() {
+        const container = document.getElementById('petals-container');
+        for(let i=0; i<10; i++) {
+            let petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.width = (Math.random() * 10 + 10) + 'px';
+            petal.style.height = petal.style.width;
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(petal);
+        }
+    }
+    createPetals();
+
 </script>
 
 </body>
