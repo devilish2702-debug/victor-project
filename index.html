@@ -185,12 +185,12 @@
     }
     
     #no { 
-        background: rgba(0,0,0,0.3); 
-        color: #fff; 
-        z-index: 1000; 
-        transition: 0.1s; 
-    }
-
+    background: rgba(0,0,0,0.3); 
+    color: #fff; 
+    z-index: 1000; 
+    position: absolute;
+    transition: 0.02s linear;   /* FAST SPEED */
+}
     /* MUSIC FAB */
     .music-fab {
         position: fixed;
@@ -220,7 +220,7 @@
 
 <div id="preloader">
     <div class="loader-heart">❤️</div>
-    <div class="loading-text">Decorating...</div>
+    <div class="loading-text">ONE_SEC.....</div>
 </div>
 
 <audio id="bgMusic" loop preload="none">
@@ -235,24 +235,30 @@
     <div class="slide active" id="slide1">
         <div class="jhumka left-j"></div>
         <div class="jhumka right-j"></div>
-        <h1>Suno... ✨</h1>
+        <h1> SUNIYE  ✨</h1>
         <div class="jaali-strip"></div>
         <p>
             In this busy city of millions,<br>
-            my eyes always search for one person.
+my eyes always search for you .
+<br> <br>
+And when they finally see you ,<br>
+the whole world slows down…<br>
+like it was waiting for that moment too.
+
         </p>
-        <button class="btn-next" onclick="nextSlide(1, 2)">Aage Chalein? ➢</button>
+        <button class="btn-next" onclick="nextSlide(1, 2)">Good only 🥰  ➢</button>
     </div>
 
     <div class="slide" id="slide2">
         <div class="jhumka left-j"></div>
         <div class="jhumka right-j"></div>
-        <h1>Thinking... 🤔</h1>
+        <h1>Achha toh....🤔</h1>
         <p>
-            You smile, I smile.<br>
-            Coincidence? I don't think so.<br>
-            <br>
-            Life is short, and coffee (and Chai) is definitely better together. ☕
+            You laugh on my dumb jokes .<br>
+            We complete our sentences .<br>
+            When we are together , time flies🚀.
+            <br> As Well As<br>
+            Life is short, and your lychee juice + my blueberry cheesecake would taste better 🤤.
         </p>
         <button class="btn-next" onclick="nextSlide(2, 3)">Exactly! ➢</button>
     </div>
@@ -260,12 +266,12 @@
     <div class="slide" id="slide3">
         <div class="jhumka left-j"></div>
         <div class="jhumka right-j"></div>
-        <h1>So... 🌹</h1>
-        <p>Will you be the 'Noor' to my 'Delhi'?</p>
+        <h1>So my kuchu puchu... 🌹</h1>
+        <p>Would you like to be 'Romi' to your 'Karan'?</p>
         <p style="font-size: 0.9em; opacity: 0.8">(Will you be my Valentine?)</p>
         
         <div class="action-btn-group">
-            <button class="btn-main" id="yes" onclick="nextSlide(3, 4)">YES! 💖</button>
+            <button class="btn-main" id="yes" onclick="yesResponse()">UM OKAY 💖</button>
             <button class="btn-main" id="no" ontouchstart="moveNo()" onmouseover="moveNo()">NO 🙈</button>
         </div>
     </div>
@@ -273,14 +279,14 @@
     <div class="slide" id="slide4">
         <div class="jhumka left-j"></div>
         <div class="jhumka right-j"></div>
-        <h1>Mubarak Ho! 🎉</h1>
+        <h1>YAAAAYAAAAA 🎉</h1>
         <div class="jaali-strip"></div>
         <p>
-            I promise bad jokes,<br>
+            I promise chatpate jokes,<br>
             stealing your fries 🍟,<br>
-            and never letting this spark fade.
+            and never letting this spark fade away.
         </p>
-        <strong>See you soon! ❤️</strong>
+        <strong>LOVE YOU YAARRR ❤️</strong>
     </div>
 
 </div>
@@ -338,42 +344,41 @@
         }
     }
 
-    // 5. RUNAWAY NO (UPDATED: Restrict Movement Area)
-    let scaleFactor = 1; 
+ // FAST RUNAWAY NO 🔥
+let scaleFactor = 1; 
 
-    function moveNo() {
-        const noBtn = document.getElementById("no");
-        const yesBtn = document.getElementById("yes");
+function moveNo() {
 
-        // A. Expand YES button
-        scaleFactor += 0.3; 
-        yesBtn.style.transform = `scale(${scaleFactor})`;
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const box = document.querySelector(".action-btn-group");
 
-        // B. Move NO button
-        noBtn.style.position = "fixed"; 
-        noBtn.style.width = "100px"; 
+    // YES grow fast
+    scaleFactor += 0.3;
+    yesBtn.style.transform = `scale(${scaleFactor})`;
+    
+     noBtn.style.position = "absolute";
 
-        // --- NEW LOGIC START ---
-        // Instead of full screen, we calculate a "Central Box" 
-        // roughly 60% of the screen width/height.
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        
-        const moveWidth = width * 0.6; // 60% of screen width
-        const moveHeight = height * 0.6; // 60% of screen height
+    // Box size
+    const boxRect = box.getBoundingClientRect();
 
-        // Offsets to center the movement box
-        const offsetX = (width - moveWidth) / 2;
-        const offsetY = (height - moveHeight) / 2;
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
 
-        // Generate random position WITHIN this central box
-        const randomX = offsetX + Math.random() * moveWidth;
-        const randomY = offsetY + Math.random() * moveHeight;
-        // --- NEW LOGIC END ---
+    // Movement limits
+    const maxX = boxRect.width - btnWidth;
+    const maxY = boxRect.height - btnHeight;
 
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
-    }
+    // EXTRA RANDOM JUMP (bigger distance)
+    const randomX = Math.random() *  maxX;
+    const randomY = Math.random() * 2 * maxY;
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+  
+
 
     // 6. PETALS
     function createPetals() {
@@ -390,6 +395,30 @@
         }
     }
     createPetals();
+    
+    // ===== YES RESPONSE TRACKING =====
+
+function yesResponse() {
+
+    // Slide change
+    nextSlide(3, 4);
+
+    // ====== EMAIL / OWNER NOTIFICATION ======
+    // Formspree API (apna ID daalna)
+    fetch("https://formspree.io/f/xvzbordl", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: "She clicked YES "
+        })
+    })
+    .then(() => console.log("Response Sent"))
+    .catch(() => console.log("Error sending response"));
+
+}
+
 
 </script>
 
